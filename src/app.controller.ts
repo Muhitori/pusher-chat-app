@@ -1,10 +1,10 @@
-import { Controller, Get, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
   @Get()
-  app(@Res() res: Response) {
-    res.render('index');
+  @Render('index')
+  app() {
+    return { message: 'Hello world!' };
   }
 }

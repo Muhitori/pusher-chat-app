@@ -1,19 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as path from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { resolve } from 'path';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(bodyParser);
+  app.useStaticAssets(resolve('./src/public'));
 
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
+  app.setBaseViewsDir(resolve('./src/views'));
+  app.setViewEngine('ejs');
 
   await app.listen(3000);
 }
